@@ -7,16 +7,20 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { ChevronLeft, Menu } from "lucide-react";
 
 export function Navigation() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
 
+  const showBackButton = pathname.includes("/problems/") || pathname === "/problems" || pathname === "/categories";
+  const backPath = pathname.includes("/problems/") ? "/problems" : "/";
+  const backText = pathname === "/problems" ? "Home" : pathname === "/categories" ? "Home" : "Problems";
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/20 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button
@@ -32,8 +36,23 @@ export function Navigation() {
             </SheetContent>
           </Sheet>
           <Link href="/" className="flex items-center">
-            <span className="font-bold text-lg sm:text-xl bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-600">CodeMaster</span>
+            <span className="font-bold text-lg sm:text-xl bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-600">
+              CodeMaster
+            </span>
           </Link>
+          {showBackButton && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hidden md:flex items-center gap-2 text-white/60 hover:text-white"
+              asChild
+            >
+              <Link href={backPath}>
+                <ChevronLeft className="h-4 w-4" />
+                {backText}
+              </Link>
+            </Button>
+          )}
         </div>
         
         <nav className="hidden md:flex md:items-center md:gap-6">
@@ -64,6 +83,14 @@ export function Navigation() {
           >
             About
           </Link>
+          <div className="flex items-center gap-2 ml-4">
+            <Button variant="ghost" asChild>
+              <Link href="/auth/signin">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/auth/signup">Sign Up</Link>
+            </Button>
+          </div>
         </nav>
       </div>
     </header>
@@ -104,6 +131,14 @@ function MobileNav({ pathname, setOpen }: { pathname: string; setOpen: (open: bo
         >
           About
         </Link>
+        <div className="flex flex-col gap-2 pt-4">
+          <Button variant="ghost" asChild onClick={() => setOpen(false)}>
+            <Link href="/auth/signin">Sign In</Link>
+          </Button>
+          <Button asChild onClick={() => setOpen(false)}>
+            <Link href="/auth/signup">Sign Up</Link>
+          </Button>
+        </div>
       </div>
     </ScrollArea>
   );

@@ -1,22 +1,20 @@
 "use client";
 
 import React from 'react';
-import { motion, MotionProps } from 'framer-motion'; // Import MotionProps from framer-motion
-import { cn } from '@/lib/utils'; // Ensure this utility exists
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface AnimatedCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   glowColor?: string;
-  className?: string;
 }
 
-// Extend MotionProps to make sure the correct types are applied to motion.div
 export function AnimatedCard({ 
   children, 
   className,
   glowColor = "rgba(0, 240, 255, 0.2)",
   ...props 
-}: AnimatedCardProps & MotionProps) { // Extend with MotionProps
+}: AnimatedCardProps) {
   return (
     <motion.div
       className={cn(
@@ -32,7 +30,7 @@ export function AnimatedCard({
       style={{
         boxShadow: `0 0 20px ${glowColor}`,
       }}
-      {...props} // Spread additional props here
+      {...props}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
       {children}

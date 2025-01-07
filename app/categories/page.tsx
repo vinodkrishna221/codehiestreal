@@ -84,22 +84,28 @@ export default function CategoriesPage() {
       <h1 className="text-3xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-600">Problem Categories</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category, index) => (
-          <Card key={index} className="p-6 bg-black/20 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all hover:shadow-lg group">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="text-cyan-400 group-hover:text-cyan-300 transition-colors">
-                {category.icon}
+          <div
+            key={index}
+            className="animate-float-up"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <Card className="p-6 bg-black/20 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all hover:shadow-lg group">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="text-cyan-400 group-hover:text-cyan-300 transition-colors">
+                  {category.icon}
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">{category.title}</h3>
+                  <Badge variant="secondary" className="mt-1 bg-white/10 text-white">
+                    {category.problemCount} problems
+                  </Badge>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">{category.title}</h3>
-                <Badge variant="secondary" className="mt-1 bg-white/10 text-white">
-                  {category.problemCount} problems
-                </Badge>
-              </div>
-            </div>
-            <p className="text-gray-400">
-              {category.description}
-            </p>
-          </Card>
+              <p className="text-gray-400">
+                {category.description}
+              </p>
+            </Card>
+          </div>
         ))}
       </div>
     </div>
